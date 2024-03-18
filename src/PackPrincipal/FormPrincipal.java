@@ -1,5 +1,13 @@
 package PackPrincipal;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class FormPrincipal extends javax.swing.JFrame {
 
     public FormPrincipal() {
@@ -53,6 +61,11 @@ public class FormPrincipal extends javax.swing.JFrame {
 
         jb_esportardatos.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jb_esportardatos.setText("Exportar Datos");
+        jb_esportardatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_esportardatosMouseClicked(evt);
+            }
+        });
 
         jb_ActualizarTabla.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jb_ActualizarTabla.setText("Actualizar Tabla");
@@ -150,6 +163,33 @@ public class FormPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jb_esportardatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_esportardatosMouseClicked
+        File archivo = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        try {
+            archivo = new File("C:/Users/Jahir Corrales/Desktop/Lab7P2_GabrielOsorto/Lab7P2_GabrielOsortoR/data.txt");
+            fr = new FileReader(archivo);
+            br = new BufferedReader(fr);
+            String linea = "";
+            while ((linea = br.readLine()) != null) {
+                productosData.add(linea);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            br.close();
+            fr.close();
+        } catch (IOException ex) {
+            Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for (int i = 0; i < productosData.size(); i++) {
+            System.out.println(productosData.get(i));
+        }
+    }//GEN-LAST:event_jb_esportardatosMouseClicked
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -192,4 +232,5 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable jt_CrearArchivo;
     private javax.swing.JTable jt_MenuPrincipal;
     // End of variables declaration//GEN-END:variables
+ArrayList<String>productosData= new ArrayList();
 }
