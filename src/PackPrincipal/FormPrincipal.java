@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 public class FormPrincipal extends javax.swing.JFrame {
 
@@ -54,7 +56,7 @@ public class FormPrincipal extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -217,7 +219,21 @@ public class FormPrincipal extends javax.swing.JFrame {
                 ex.printStackTrace();
             }
         }
+//LLENAR LA TABLA (ESO ESPERO)
+        for (int i = 1; i < productosData.size(); i++) {
+            int j = i;
+            productosList.add(llenarArrayProductosList(productosData, j));
+        }
+        for (int i = 0; i < productosList.size(); i++) {
+            DefaultTableModel modelotabla = (DefaultTableModel) jt_MenuPrincipal.getModel();
+            Object[] productTable = {productosList.get(i).getId(),
+                                    productosList.get(i).getName(),productosList.get(i).getCategory(),
+                                    productosList.get(i).getPrice(),productosList.get(i).getAisle(),
+                                    productosList.get(i).getBin()
+                                    };
+            modelotabla.addRow(productTable);
 
+        }
     }//GEN-LAST:event_jb_esportardatosMouseClicked
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -248,6 +264,29 @@ public class FormPrincipal extends javax.swing.JFrame {
         });
     }
 
+public static Producto llenarArrayProductosList(ArrayList<String> prodData, int x) {
+    Producto produ = null;
+    String prod1 = prodData.get(x);
+    String[] prod2 = prod1.split(",");
+    if (prod2.length == 6) {
+        try {
+            int code1 = Integer.parseInt(prod2[0]);
+            String name1 = prod2[1];
+            int category11 = Integer.parseInt(prod2[2]);
+            double price11 = Double.parseDouble(prod2[3]);
+            int aisle11 = Integer.parseInt(prod2[4]);
+            int bin1 = Integer.parseInt(prod2[5]);
+            produ = new Producto(code1, name1, category11, price11, aisle11, bin1);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "ERROR, CAMPO VACIO");
+    }
+    
+    return produ;
+}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -262,4 +301,5 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable jt_MenuPrincipal;
     // End of variables declaration//GEN-END:variables
 ArrayList<String> productosData = new ArrayList();
+    ArrayList<Producto> productosList = new ArrayList();
 }

@@ -130,7 +130,7 @@
                             <Column editable="true" title="category" type="java.lang.Integer"/>
                             <Column editable="true" title="price" type="java.lang.Double"/>
                             <Column editable="true" title="aisle" type="java.lang.Integer"/>
-                            <Column editable="true" title="bin" type="java.lang.Object"/>
+                            <Column editable="true" title="bin" type="java.lang.Integer"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
