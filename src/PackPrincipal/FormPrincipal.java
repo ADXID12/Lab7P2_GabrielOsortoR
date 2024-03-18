@@ -1,12 +1,16 @@
 package PackPrincipal;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 public class FormPrincipal extends javax.swing.JFrame {
 
@@ -165,6 +169,7 @@ public class FormPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_esportardatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_esportardatosMouseClicked
+        //SE LLENA EL ARRAYLIST GLOBAL PARA GUARDAR LA INFO QUE ESTA EN EL ARCHIVO DATA
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
@@ -185,10 +190,34 @@ public class FormPrincipal extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         for (int i = 0; i < productosData.size(); i++) {
             System.out.println(productosData.get(i));
         }
+        //CREACION DEL ARCHIVO DATAJSON
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        try {
+            File fichero = new File("C:/Users/Jahir Corrales/Desktop/Lab7P2_GabrielOsorto/Lab7P2_GabrielOsortoR/" + "datajson.txt");
+            fw = new FileWriter(fichero);
+            bw = new BufferedWriter(fw);
+            for (String linea : productosData) {
+                bw.write(linea);
+                bw.newLine();
+            }
+            bw.flush();
+            JOptionPane.showMessageDialog(this, "Archivo datajson creado exitosamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bw.close();
+                fw.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
     }//GEN-LAST:event_jb_esportardatosMouseClicked
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -232,5 +261,5 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable jt_CrearArchivo;
     private javax.swing.JTable jt_MenuPrincipal;
     // End of variables declaration//GEN-END:variables
-ArrayList<String>productosData= new ArrayList();
+ArrayList<String> productosData = new ArrayList();
 }
