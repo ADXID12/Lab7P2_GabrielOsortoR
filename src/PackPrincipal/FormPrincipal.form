@@ -85,7 +85,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                                  <Component id="jb_esportardatos" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="jb_exportardatos" min="-2" pref="160" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
                                   <Component id="jb_cargarArchivoData" min="-2" pref="160" max="-2" attributes="0"/>
                               </Group>
@@ -105,7 +105,7 @@
                           <Component id="jScrollPane1" min="-2" pref="281" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jb_esportardatos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jb_exportardatos" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jb_cargarArchivoData" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="61" max="32767" attributes="0"/>
@@ -174,7 +174,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JButton" name="jb_esportardatos">
+                <Component class="javax.swing.JButton" name="jb_exportardatos">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Black" size="12" style="1"/>
@@ -182,7 +182,7 @@
                     <Property name="text" type="java.lang.String" value="Exportar Datos"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_esportardatosMouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_exportardatosMouseClicked"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jb_cargarArchivoData">

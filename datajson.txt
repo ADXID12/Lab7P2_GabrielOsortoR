@@ -1,3 +1,0 @@
-id,name,category,price,aisle,bin
-133,Red Pen,0,0.99,121,044
-4478,Razorx,4,2.59,664,000

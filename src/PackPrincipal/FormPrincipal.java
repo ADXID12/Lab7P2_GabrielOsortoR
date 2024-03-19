@@ -29,7 +29,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         jp_MenuPrincipal = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_MenuPrincipal = new javax.swing.JTable();
-        jb_esportardatos = new javax.swing.JButton();
+        jb_exportardatos = new javax.swing.JButton();
         jb_cargarArchivoData = new javax.swing.JButton();
         jp_CrearArchivo = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -65,11 +65,11 @@ public class FormPrincipal extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jt_MenuPrincipal);
 
-        jb_esportardatos.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jb_esportardatos.setText("Exportar Datos");
-        jb_esportardatos.addMouseListener(new java.awt.event.MouseAdapter() {
+        jb_exportardatos.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jb_exportardatos.setText("Exportar Datos");
+        jb_exportardatos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jb_esportardatosMouseClicked(evt);
+                jb_exportardatosMouseClicked(evt);
             }
         });
 
@@ -89,7 +89,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                 .addGroup(jp_MenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jp_MenuPrincipalLayout.createSequentialGroup()
                         .addGap(88, 88, 88)
-                        .addComponent(jb_esportardatos, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_exportardatos, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(117, 117, 117)
                         .addComponent(jb_cargarArchivoData, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jp_MenuPrincipalLayout.createSequentialGroup()
@@ -104,7 +104,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addGroup(jp_MenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jb_esportardatos)
+                    .addComponent(jb_exportardatos)
                     .addComponent(jb_cargarArchivoData))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
@@ -183,7 +183,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jb_esportardatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_esportardatosMouseClicked
+    private void jb_exportardatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_exportardatosMouseClicked
         productosData.clear();
         productosList.clear();
 //SE LLENA EL ARRAYLIST GLOBAL PARA GUARDAR LA INFO QUE ESTA EN EL ARCHIVO DATA
@@ -208,28 +208,44 @@ public class FormPrincipal extends javax.swing.JFrame {
             Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
         //CREACION DEL ARCHIVO DATAJSON
-        FileWriter fw = null;
+
         BufferedWriter bw = null;
         try {
-            File fichero = new File("C:/Users/Jahir Corrales/Desktop/Lab7P2_GabrielOsorto/Lab7P2_GabrielOsortoR/" + "datajson.txt");
-            fw = new FileWriter(fichero);
+            File fichero = new File("C:/Users/Jahir Corrales/Desktop/Lab7P2_GabrielOsorto/Lab7P2_GabrielOsortoR/datajson.txt");
+            FileWriter fw = new FileWriter(fichero);
             bw = new BufferedWriter(fw);
-            for (String linea : productosData) {
-                bw.write(linea);
-                bw.newLine();
+            bw.write("[\n");
+            for (int i = 0; i < productosList.size(); i++) {
+                Producto producto = productosList.get(i);
+                bw.write("  {\n");
+                bw.write("    \"id\": " + producto.getId() + ",");
+                bw.write("    \"name\": \"" + producto.getName() + "\",");
+                bw.write("    \"category\": " + producto.getCategory() + ",");
+                bw.write("    \"price\": " + producto.getPrice() + ",");
+                bw.write("    \"aisle\": " + producto.getAisle() + ",");
+                bw.write("    \"bin\": " + producto.getBin() + "");
+                if (i < productosList.size() - 1) {
+                    bw.write("  },\n");
+                } else {
+                    bw.write("  }\n");
+                }
             }
+            bw.write("]");
             bw.flush();
-            JOptionPane.showMessageDialog(this, "Archivo datajson creado exitosamente");
-        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Archivo datajson creado exitosamente");
+        } catch (IOException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al guardar el archivo");
         } finally {
             try {
-                bw.close();
-                fw.close();
+                if (bw != null) {
+                    bw.close();
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
+
 //LLENAR LA TABLA (ESO ESPERO)
         for (int i = 1; i < productosData.size(); i++) {
             int j = i;
@@ -245,7 +261,7 @@ public class FormPrincipal extends javax.swing.JFrame {
             modelotabla.addRow(productTable);
 
         }
-    }//GEN-LAST:event_jb_esportardatosMouseClicked
+    }//GEN-LAST:event_jb_exportardatosMouseClicked
 
     private void jb_CrearNuevoDatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearNuevoDatoMouseClicked
         try {
@@ -309,6 +325,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jb_cargarArchivoDataMouseClicked
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -390,10 +407,10 @@ public class FormPrincipal extends javax.swing.JFrame {
                 bw.newLine();
             }
             bw.flush();
-            JOptionPane.showMessageDialog(this, "Archivo guardado con exito :D");
+            JOptionPane.showMessageDialog(null, "Archivo guardado con exito :D");
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "No se guardo su archivo :( ");
+            JOptionPane.showMessageDialog(null, "No se guardo su archivo :( ");
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -403,7 +420,7 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jb_CrearNuevoDato;
     private javax.swing.JButton jb_cargarArchivoData;
-    private javax.swing.JButton jb_esportardatos;
+    private javax.swing.JButton jb_exportardatos;
     private javax.swing.JPanel jp_CrearArchivo;
     private javax.swing.JPanel jp_MenuPrincipal;
     private javax.swing.JTable jt_CrearArchivo;
