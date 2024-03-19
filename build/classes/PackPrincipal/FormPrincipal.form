@@ -87,7 +87,7 @@
                                   <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                                   <Component id="jb_esportardatos" min="-2" pref="160" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
-                                  <Component id="jb_ActualizarTabla" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="jb_cargarArchivoData" min="-2" pref="160" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -106,7 +106,7 @@
                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jb_esportardatos" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jb_ActualizarTabla" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jb_cargarArchivoData" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="61" max="32767" attributes="0"/>
                       </Group>
@@ -185,7 +185,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_esportardatosMouseClicked"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jb_ActualizarTabla">
+                <Component class="javax.swing.JButton" name="jb_cargarArchivoData">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Black" size="12" style="1"/>
@@ -220,7 +220,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="215" max="-2" attributes="0"/>
-                                  <Component id="jb_ExportarDatos" min="-2" pref="184" max="-2" attributes="0"/>
+                                  <Component id="jb_CrearNuevoDato" min="-2" pref="184" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="24" max="32767" attributes="0"/>
@@ -233,8 +233,8 @@
                           <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="281" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                          <Component id="jb_ExportarDatos" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="74" max="32767" attributes="0"/>
+                          <Component id="jb_CrearNuevoDato" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="72" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -250,7 +250,7 @@
                     <Component class="javax.swing.JTable" name="jt_CrearArchivo">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="6" rowCount="0">
+                          <Table columnCount="6" rowCount="3">
                             <Column editable="true" title="id" type="java.lang.Integer"/>
                             <Column editable="true" title="name" type="java.lang.String"/>
                             <Column editable="true" title="category" type="java.lang.Integer"/>
@@ -300,10 +300,16 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JButton" name="jb_ExportarDatos">
+                <Component class="javax.swing.JButton" name="jb_CrearNuevoDato">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Arial Black" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Exportar Datos"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_CrearNuevoDatoMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 public class FormPrincipal extends javax.swing.JFrame {
@@ -30,11 +28,11 @@ public class FormPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_MenuPrincipal = new javax.swing.JTable();
         jb_esportardatos = new javax.swing.JButton();
-        jb_ActualizarTabla = new javax.swing.JButton();
+        jb_cargarArchivoData = new javax.swing.JButton();
         jp_CrearArchivo = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jt_CrearArchivo = new javax.swing.JTable();
-        jb_ExportarDatos = new javax.swing.JButton();
+        jb_CrearNuevoDato = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,8 +71,8 @@ public class FormPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jb_ActualizarTabla.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jb_ActualizarTabla.setText("Actualizar Tabla");
+        jb_cargarArchivoData.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jb_cargarArchivoData.setText("Actualizar Tabla");
 
         javax.swing.GroupLayout jp_MenuPrincipalLayout = new javax.swing.GroupLayout(jp_MenuPrincipal);
         jp_MenuPrincipal.setLayout(jp_MenuPrincipalLayout);
@@ -86,7 +84,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                         .addGap(88, 88, 88)
                         .addComponent(jb_esportardatos, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(117, 117, 117)
-                        .addComponent(jb_ActualizarTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jb_cargarArchivoData, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jp_MenuPrincipalLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -100,7 +98,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(jp_MenuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jb_esportardatos)
-                    .addComponent(jb_ActualizarTabla))
+                    .addComponent(jb_cargarArchivoData))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
 
@@ -110,7 +108,9 @@ public class FormPrincipal extends javax.swing.JFrame {
 
         jt_CrearArchivo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "id", "name", "category", "price", "aisle", "bin"
@@ -126,7 +126,13 @@ public class FormPrincipal extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jt_CrearArchivo);
 
-        jb_ExportarDatos.setText("Exportar Datos");
+        jb_CrearNuevoDato.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jb_CrearNuevoDato.setText("Exportar Datos");
+        jb_CrearNuevoDato.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_CrearNuevoDatoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jp_CrearArchivoLayout = new javax.swing.GroupLayout(jp_CrearArchivo);
         jp_CrearArchivo.setLayout(jp_CrearArchivoLayout);
@@ -139,7 +145,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jp_CrearArchivoLayout.createSequentialGroup()
                         .addGap(215, 215, 215)
-                        .addComponent(jb_ExportarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jb_CrearNuevoDato, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jp_CrearArchivoLayout.setVerticalGroup(
@@ -148,8 +154,8 @@ public class FormPrincipal extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
-                .addComponent(jb_ExportarDatos)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addComponent(jb_CrearNuevoDato)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Crear Archivo", jp_CrearArchivo);
@@ -192,10 +198,6 @@ public class FormPrincipal extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        for (int i = 0; i < productosData.size(); i++) {
-            System.out.println(productosData.get(i));
-        }
         //CREACION DEL ARCHIVO DATAJSON
         FileWriter fw = null;
         BufferedWriter bw = null;
@@ -227,14 +229,22 @@ public class FormPrincipal extends javax.swing.JFrame {
         for (int i = 0; i < productosList.size(); i++) {
             DefaultTableModel modelotabla = (DefaultTableModel) jt_MenuPrincipal.getModel();
             Object[] productTable = {productosList.get(i).getId(),
-                                    productosList.get(i).getName(),productosList.get(i).getCategory(),
-                                    productosList.get(i).getPrice(),productosList.get(i).getAisle(),
-                                    productosList.get(i).getBin()
-                                    };
+                productosList.get(i).getName(), productosList.get(i).getCategory(),
+                productosList.get(i).getPrice(), productosList.get(i).getAisle(),
+                productosList.get(i).getBin()
+            };
             modelotabla.addRow(productTable);
 
         }
     }//GEN-LAST:event_jb_esportardatosMouseClicked
+
+    private void jb_CrearNuevoDatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearNuevoDatoMouseClicked
+        try {
+            CrearNuevoArchivotxt("C:/Users/Jahir Corrales/Desktop/Lab7P2_GabrielOsorto/Lab7P2_GabrielOsortoR/archivoNuevo.txt");
+        } catch (IOException ex) {
+            Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jb_CrearNuevoDatoMouseClicked
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -264,36 +274,73 @@ public class FormPrincipal extends javax.swing.JFrame {
         });
     }
 
-public static Producto llenarArrayProductosList(ArrayList<String> prodData, int x) {
-    Producto produ = null;
-    String prod1 = prodData.get(x);
-    String[] prod2 = prod1.split(",");
-    if (prod2.length == 6) {
-        try {
-            int code1 = Integer.parseInt(prod2[0]);
-            String name1 = prod2[1];
-            int category11 = Integer.parseInt(prod2[2]);
-            double price11 = Double.parseDouble(prod2[3]);
-            int aisle11 = Integer.parseInt(prod2[4]);
-            int bin1 = Integer.parseInt(prod2[5]);
-            produ = new Producto(code1, name1, category11, price11, aisle11, bin1);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+    public static Producto llenarArrayProductosList(ArrayList<String> prodData, int x) {
+        Producto produ = null;
+        String prod1 = prodData.get(x);
+        String[] prod2 = prod1.split(",");
+        if (prod2.length == 6) {
+            try {
+                int code1 = Integer.parseInt(prod2[0]);
+                String name1 = prod2[1];
+                int category11 = Integer.parseInt(prod2[2]);
+                double price11 = Double.parseDouble(prod2[3]);
+                int aisle11 = Integer.parseInt(prod2[4]);
+                int bin1 = Integer.parseInt(prod2[5]);
+                produ = new Producto(code1, name1, category11, price11, aisle11, bin1);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "ERROR, CAMPO VACIO");
         }
-    } else {
-        JOptionPane.showMessageDialog(null, "ERROR, CAMPO VACIO");
+
+        return produ;
     }
-    
-    return produ;
-}
+
+    public void CrearNuevoArchivotxt(String path) throws IOException {
+        DefaultTableModel model = (DefaultTableModel) jt_CrearArchivo.getModel();
+        int rowcont = model.getRowCount();
+        int colcont = model.getColumnCount();
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+        fw = new FileWriter(path, false);
+        bw = new BufferedWriter(fw);
+        try {
+            for (int i = 0; i < colcont; i++) {
+                bw.write(model.getColumnName(i));
+                if (i < colcont - 1) {
+                    bw.write(",");
+                }
+            }
+            bw.newLine();
+            for (int fil = 0; fil < rowcont; fil++) {
+                for (int col = 0; col < colcont; col++) {
+                    Object value = model.getValueAt(fil, col);
+                    if (value != null) {
+                        bw.write(value.toString());
+                    }
+                    if (col < colcont - 1) {
+                        bw.write(",");
+                    }
+                }
+                bw.newLine();
+            }
+            bw.flush();
+            JOptionPane.showMessageDialog(this, "Archivo guardado con exito :D");
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "No se guardo su archivo :( ");
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JButton jb_ActualizarTabla;
-    private javax.swing.JButton jb_ExportarDatos;
+    private javax.swing.JButton jb_CrearNuevoDato;
+    private javax.swing.JButton jb_cargarArchivoData;
     private javax.swing.JButton jb_esportardatos;
     private javax.swing.JPanel jp_CrearArchivo;
     private javax.swing.JPanel jp_MenuPrincipal;

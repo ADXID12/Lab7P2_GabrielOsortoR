@@ -1,0 +1,4 @@
+id,name,category,price,aisle,bin
+1293,leche sula,12,12.99,14,1
+3012,galletas maria,23,5.99,355,371
+3018,maggi,31,2.56,133,
