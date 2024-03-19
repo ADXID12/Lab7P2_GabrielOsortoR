@@ -190,8 +190,11 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial Black" size="12" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Actualizar Tabla"/>
+                    <Property name="text" type="java.lang.String" value="Cargar Tabla"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jb_cargarArchivoDataMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

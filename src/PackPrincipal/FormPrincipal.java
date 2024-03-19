@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 public class FormPrincipal extends javax.swing.JFrame {
@@ -72,7 +74,12 @@ public class FormPrincipal extends javax.swing.JFrame {
         });
 
         jb_cargarArchivoData.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jb_cargarArchivoData.setText("Actualizar Tabla");
+        jb_cargarArchivoData.setText("Cargar Tabla");
+        jb_cargarArchivoData.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_cargarArchivoDataMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jp_MenuPrincipalLayout = new javax.swing.GroupLayout(jp_MenuPrincipal);
         jp_MenuPrincipal.setLayout(jp_MenuPrincipalLayout);
@@ -177,7 +184,9 @@ public class FormPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_esportardatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_esportardatosMouseClicked
-        //SE LLENA EL ARRAYLIST GLOBAL PARA GUARDAR LA INFO QUE ESTA EN EL ARCHIVO DATA
+        productosData.clear();
+        productosList.clear();
+//SE LLENA EL ARRAYLIST GLOBAL PARA GUARDAR LA INFO QUE ESTA EN EL ARCHIVO DATA
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
@@ -245,6 +254,61 @@ public class FormPrincipal extends javax.swing.JFrame {
             Logger.getLogger(FormPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jb_CrearNuevoDatoMouseClicked
+
+    private void jb_cargarArchivoDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_cargarArchivoDataMouseClicked
+        File fichero = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        String textoGuardado = "";
+
+        try {
+            jfc = new JFileChooser("./");
+            FileNameExtensionFilter filtro
+                    = new FileNameExtensionFilter("Archivos de Texto", "txt");
+            jfc.setFileFilter(filtro);
+            seleccion = jfc.showOpenDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                fichero = jfc.getSelectedFile();
+                fr = new FileReader(fichero);
+                br = new BufferedReader(fr);
+
+                String linea;
+                productosData.clear();
+                productosList.clear();
+                while ((linea = br.readLine()) != null) {
+                    productosData.add(linea);
+                }
+                for (int i = 1; i < productosData.size(); i++) {
+                    int j = i;
+                    productosList.add(llenarArrayProductosList(productosData, j));
+                }
+                for (int i = 0; i < productosList.size(); i++) {
+                    DefaultTableModel modelotabla = (DefaultTableModel) jt_MenuPrincipal.getModel();
+                    Object[] productTable = {productosList.get(i).getId(),
+                        productosList.get(i).getName(), productosList.get(i).getCategory(),
+                        productosList.get(i).getPrice(), productosList.get(i).getAisle(),
+                        productosList.get(i).getBin()
+                    };
+                    modelotabla.addRow(productTable);
+                }
+            } //fin if
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+                if (fr != null) {
+                    fr.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+    }//GEN-LAST:event_jb_cargarArchivoDataMouseClicked
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -332,8 +396,6 @@ public class FormPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se guardo su archivo :( ");
         }
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -349,4 +411,6 @@ public class FormPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 ArrayList<String> productosData = new ArrayList();
     ArrayList<Producto> productosList = new ArrayList();
+    JFileChooser jfc;
+    int seleccion;
 }
